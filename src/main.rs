@@ -399,7 +399,7 @@ fn try_main(args: Cli, enable_styles: bool) -> Result<ExitCode> {
 
     // Show command from cache
     if !command.is_empty() {
-        // TODO: Remove this check 1 year after version 1.7.0 was released
+        // TODO: remove in tealdeer 1.10
         if cache.old_custom_pages_exist()? {
             print_warning(
                 enable_styles,

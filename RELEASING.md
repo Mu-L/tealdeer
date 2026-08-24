@@ -1,8 +1,17 @@
 # Releasing
 
+Update dependencies:
+
+    $ cargo update --verbose
+
 Run linting:
 
     $ cargo clean && cargo clippy
+
+Check that shell completions and docs are up to date:
+
+    $ vim completion/*
+    $ vim docs/src
 
 Set variables:
 

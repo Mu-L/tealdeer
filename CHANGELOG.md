@@ -1,17 +1,65 @@
 # Changelog
 
-This project follows semantic versioning.
+### [v1.9.0][v1.9.0] (2026-08-24)
 
-Possible log types:
+This release of tealdeer adds support for placeholder escaping and placeholder
+variants, and contains various improvements for configuring tealdeer.
 
-- `[added]` for new features.
-- `[changed]` for changes in existing functionality.
-- `[deprecated]` for once-stable features removed in upcoming releases.
-- `[removed]` for deprecated features removed in this release.
-- `[fixed]` for any bug fixes.
-- `[security]` to invite users to upgrade in case of vulnerabilities.
-- `[docs]` for documentation changes.
-- `[chore]` for maintenance work.
+Escaped placeholders are a special form of placeholders which are needed to
+render pages like `docker compose` correctly. Placeholder variants are a new
+feature of tldr pages that allows to specify both the short and long form of
+program flags in a tldr page. Tealdeer now parses these placeholders correctly
+and allows users to choose which variant should be displayed.
+
+On MacOS, tealdeer now uses XDG directories by default. For backwards
+compatibility, if tealdeer configuration files or a page cache is already
+present at the previously used locations, they will still be used going forward.
+A side effect of this is that the directories used on Windows have changed.
+However, the new paths are more canonical, so there is no automatic migration
+for Windows users. Please use `tldr --show-paths` to move your configuration
+files to the new location.
+
+In addition to relative paths, the config file now supports tilde expansion for
+file paths. Furthermore, users can now override any settings from the config
+file using the `--override-config` command line flag.
+
+For details, please refer to the [user documentation]. Note that the user
+documentation has been moved from GitHub pages to our own domain. The new site
+allows you to select for which version of tealdeer you want to view the
+documentation.
+
+#### Changes:
+
+- [added] Support for placeholder escaping ([#414])
+- [added] Suggest trying different TLS backend when update fails ([#465])
+- [added] Add builtin `tldr tealdeer` page ([#472])
+- [added] Add `display.indent` config option ([#471])
+- [added] Support tilde (~) expansion on config paths ([#476])
+- [added] Add `updates.warn_cache_age` config option ([#492])
+- [added] Add `--override-config` flag ([#458])
+- [added] Support for placeholder variants ([#512])
+- [added] Add version support to published docs ([#358])
+- [changed] Support XDG directory spec on macOS by switching app_dirs2 to etcetera ([#467])
+- [changed] Silence the missing-cache message under --quiet ([#500])
+- [changed] Allow --no-auto-update without a command ([#501])
+- [changed] Bump edition to 2024 ([#510])
+- [changed] Error on unknown config keys ([#516])
+- [chore] Add native Windows ARM64 release and tests in CI ([#502], [#503])
+- [removed] Remove cleanup code for old pages directory ([#514])
+
+#### Contributors to this version:
+
+- [Ellis Clayton][@ellsclytn]
+- [@Giftzwerg02][@Giftzwerg02]
+- [Guilherme Albuquerque][@gui-alb]
+- [Marshall Porter][@meop]
+- [Niklas Mohrin][@niklasmohrin]
+- [Nikolaos Karaolidis][@karaolidis]
+- [Pavel T.][@ptcodes]
+- [@VXNCXNX][@VXNCXNX]
+- [@xtqqczze][@xtqqczze]
+
+Thanks!
 
 ### [v1.5.1][v1.5.1], [v1.6.2][v1.6.2], [v1.7.3][v1.7.3] (2026-01-25)
 
@@ -598,6 +646,14 @@ Thanks!
 [@mipedja]: https://github.com/mipedja
 [@hex1c]: https://github.com/hex1c
 [@lengyijun]: https://github.com/lengyijun
+[@Giftzwerg02]: https://github.com/Giftzwerg02
+[@gui-alb]: https://github.com/gui-alb
+[@ellsclytn]: https://github.com/ellsclytn
+[@meop]: https://github.com/meop
+[@karaolidis]: https://github.com/karaolidis
+[@ptcodes]: https://github.com/ptcodes
+[@VXNCXNX]: https://github.com/VXNCXNX
+[@xtqqczze]: https://github.com/xtqqczze
 
 [v1.0.0]: https://github.com/tealdeer-rs/tealdeer/compare/v0.4.0...v1.0.0
 [v1.1.0]: https://github.com/tealdeer-rs/tealdeer/compare/v1.0.0...v1.1.0
@@ -616,6 +672,7 @@ Thanks!
 [v1.7.3]: https://github.com/tealdeer-rs/tealdeer/compare/v1.7.2...v1.7.3
 [v1.8.0]: https://github.com/tealdeer-rs/tealdeer/compare/v1.7.2...v1.8.0
 [v1.8.1]: https://github.com/tealdeer-rs/tealdeer/compare/v1.8.0...v1.8.1
+[v1.9.0]: https://github.com/tealdeer-rs/tealdeer/compare/v1.8.1...v1.9.0
 
 [i34]: https://github.com/tealdeer-rs/tealdeer/issues/34
 [i43]: https://github.com/tealdeer-rs/tealdeer/issues/43
@@ -722,3 +779,20 @@ Thanks!
 [#439]: https://github.com/tealdeer-rs/tealdeer/pull/439
 [#440]: https://github.com/tealdeer-rs/tealdeer/pull/440
 [#451]: https://github.com/tealdeer-rs/tealdeer/pull/451
+[#414]: https://github.com/tealdeer-rs/tealdeer/pull/414
+[#465]: https://github.com/tealdeer-rs/tealdeer/pull/465
+[#472]: https://github.com/tealdeer-rs/tealdeer/pull/472
+[#471]: https://github.com/tealdeer-rs/tealdeer/pull/471
+[#476]: https://github.com/tealdeer-rs/tealdeer/pull/476
+[#492]: https://github.com/tealdeer-rs/tealdeer/pull/492
+[#458]: https://github.com/tealdeer-rs/tealdeer/pull/458
+[#512]: https://github.com/tealdeer-rs/tealdeer/pull/512
+[#467]: https://github.com/tealdeer-rs/tealdeer/pull/467
+[#500]: https://github.com/tealdeer-rs/tealdeer/pull/500
+[#501]: https://github.com/tealdeer-rs/tealdeer/pull/501
+[#510]: https://github.com/tealdeer-rs/tealdeer/pull/510
+[#502]: https://github.com/tealdeer-rs/tealdeer/pull/502
+[#503]: https://github.com/tealdeer-rs/tealdeer/pull/503
+[#514]: https://github.com/tealdeer-rs/tealdeer/pull/514
+[#358]: https://github.com/tealdeer-rs/tealdeer/issues/358
+[#516]: https://github.com/tealdeer-rs/tealdeer/pull/516

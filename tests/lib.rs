@@ -1502,6 +1502,37 @@ fn test_custom_pages_dir_is_not_dir() {
         .failure();
 }
 
+#[test]
+fn test_failure_on_unknown_field_in_config() {
+    let testenv = TestEnv::new().install_default_cache();
+
+    testenv.append_to_config(
+        "
+        [display]
+        unknown = true
+        ",
+    );
+
+    testenv
+        .command()
+        .args(["which"])
+        .assert()
+        .failure()
+        .stderr(contains("unknown field `unknown`"));
+}
+
+#[test]
+fn test_failure_on_unknown_field_in_override_config() {
+    let testenv = TestEnv::new().install_default_cache();
+
+    testenv
+        .command()
+        .args(["--override-config", "display.invalid=true", "which"])
+        .assert()
+        .failure()
+        .stderr(contains("unknown field `invalid`"));
+}
+
 mod placeholder_format {
     use super::*;
 

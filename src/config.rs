@@ -140,6 +140,7 @@ impl From<RawColor> for Color {
 }
 
 #[derive(Copy, Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
 struct RawStyle {
     pub foreground: Option<RawColor>,
     pub background: Option<RawColor>,
@@ -193,6 +194,7 @@ impl From<RawStyle> for Style {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
 struct RawStyleConfig {
     #[serde(default)]
     pub description: RawStyle,
@@ -219,6 +221,7 @@ impl From<&RawStyleConfig> for StyleConfig {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
 struct RawDisplayConfig {
     #[serde(default)]
     pub compact: bool,
@@ -233,6 +236,7 @@ struct RawDisplayConfig {
 }
 
 #[derive(Copy, Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
 struct RawIndent {
     #[serde(default = "default_base_indent")]
     base: usize,
@@ -303,6 +307,7 @@ enum RawWarnCacheAge {
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
 struct RawUpdatesConfig {
     #[serde(default)]
     pub auto_update: bool,
@@ -332,6 +337,7 @@ impl Default for RawUpdatesConfig {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
 struct RawDirectoriesConfig {
     #[serde(default)]
     pub cache_dir: Option<PathBuf>,
@@ -366,6 +372,7 @@ impl RawPlatformType {
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
 struct RawSearchConfig {
     pub languages: Option<Vec<String>>,
     pub platforms: Option<Vec<RawPlatformType>>,
@@ -397,7 +404,7 @@ impl<'a> From<&'a RawSearchConfig> for SearchConfig<'a> {
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
-#[serde(default)]
+#[serde(default, deny_unknown_fields)]
 struct RawConfig {
     style: RawStyleConfig,
     display: RawDisplayConfig,
